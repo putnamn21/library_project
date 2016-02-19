@@ -29,5 +29,20 @@ Template.bookList.events({
     "click .checkOut": function () {
         Meteor.call('checkOut', this._id, currentUID)
     },
-    
+    "submit .bookComment": function(event) {
+       event.preventDefault();
+       var text = event.target.comment.value;
+       var rating = event.target.rating.value;
+       var user = Meteor.user().username;
+
+       var comment = {
+           text: text,
+           rating: rating,
+           user: user
+       };
+
+       Meteor.call('addComment', comment, this);
+
+       event.target.comment.value = '';
+   }    
 });
