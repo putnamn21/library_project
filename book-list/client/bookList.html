@@ -1,0 +1,31 @@
+<template name="bookList">
+    {{#if currentUser}}
+    <h3>Here are the library books:</h3>
+    <UL>
+        {{#each books}}
+        <li>
+            <i>{{title}}</i> by {{author}}
+            {{#if isAdmin}}
+                <button class="deleteBook" type="button">Delete</button>
+            {{/if}}
+            {{#if bookOut}}
+                <span>Checked Out by {{user}}</span>
+            {{else}}
+                <button class="checkOut" type="button">Check Out</button>
+            {{/if}}
+        </li>
+        {{/each}}
+    </UL>
+    {{#if isAdmin}}
+    <form class="add-book">
+        Title:
+        <br>
+        <input type="text" name="title">
+        <br> Author:
+        <br>
+        <input type="text" name="author">
+        <input type="submit" value="Add Book">
+    </form>
+    {{/if}} {{else}}
+    <h3>Please log in to see books</h3> {{/if}}
+</template>
