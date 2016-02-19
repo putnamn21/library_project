@@ -1,15 +1,13 @@
 Meteor.subscribe('books');
 Meteor.subscribe('userData');
 
-var currentUID = Meteor.userId();
-
 Template.bookList.helpers({
     books: function () {
         return Books.find();
         //    return Session.get('books');
     },
     isAdmin: function () {
-        if (currentUID == "qQxgj2mm3t4nhb4wH") {
+        if (Meteor.userId() == "qQxgj2mm3t4nhb4wH") {
             return true;
         } else {
             return false;
