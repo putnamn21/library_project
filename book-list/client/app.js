@@ -1,5 +1,4 @@
 Meteor.subscribe('books');
-Meteor.subscribe('userData');
 
 Template.bookList.helpers({
     books: function () {
@@ -7,11 +6,28 @@ Template.bookList.helpers({
         //    return Session.get('books');
     },
     isAdmin: function () {
-        if (Meteor.userId() == "qQxgj2mm3t4nhb4wH") {
+        if (Meteor.user().username == "libadmin") {
             return true;
         } else {
             return false;
         }
+    },
+    isSameUser: function () {
+        if (this.user == Meteor.user().username) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+    calcDateDue: function () {
+
+        
+//        var hour = date.getHours();
+//        var minute = date.getMinutes();
+//        var seconds = date.getSeconds();
+
+
+        
     }
 });
 
@@ -27,22 +43,25 @@ Template.bookList.events({
         Meteor.call('deleteBook', this._id)
     },
     "click .checkOut": function () {
-        Meteor.call('checkOut', this._id, currentUID)
+        Meteor.call('checkOut', this._id, Meteor.user().username, Date.now())
     },
-    "submit .bookComment": function(event) {
-       event.preventDefault();
-       var text = event.target.comment.value;
-       var rating = event.target.rating.value;
-       var user = Meteor.user().username;
+    "click .checkIn": function () {
+        Meteor.call('checkIn', this._id, Meteor.user().username, Date.now())
+    },
+    "submit .bookComment": function (event) {
+        event.preventDefault();
+        var text = event.target.comment.value;
+        var rating = event.target.rating.value;
+        var user = Meteor.user().username;
 
-       var comment = {
-           text: text,
-           rating: rating,
-           user: user
-       };
+        var comment = {
+            text: text,
+            rating: rating,
+            user: user
+        };
 
-       Meteor.call('addComment', comment, this);
+        Meteor.call('addComment', comment, this);
 
-       event.target.comment.value = '';
-   }    
+        event.target.comment.value = '';
+    }
 });
