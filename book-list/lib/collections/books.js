@@ -18,5 +18,14 @@ Meteor.methods({
                 }}
             );
             return bookID;
-    }
+    },
+    addComment: function(comment, book){
+       if (Meteor.userId()) {
+
+           Books.update(book._id,{
+           $push: {comments: comment}
+           });
+
+       }
+   }
 });
