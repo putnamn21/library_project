@@ -5,29 +5,48 @@
         {{#each books}}
         <li>
             <i>{{title}}</i> by {{author}}
+            <br/>
+            
+            <!--check if admin-->
             {{#if isAdmin}}
                 <button class="deleteBook" type="button">Delete</button>
+                <br/>
             {{/if}}
+
+            <!--render checkout & checkin buttons-->
             {{#if bookOut}}
                 <span>Checked Out by {{user}}</span>
+                <br/>
+                <span>Due: {{strDateDue}}</span>
+                <br/>
+                {{#if isSameUser}}
+                <button class="checkIn" type="button">Check In</button>
+                {{/if}}
+                
             {{else}}
                 <button class="checkOut" type="button">Check Out</button>
-            {{/if}}
+            {{/if}} 
+            
             {{#each comments}}
-                <h4>{{user}}</h4><h4>rating: {{rating}}/4</h4>
-                <p>{{text}}</p>
-                <p>Comment:</p>
+                <h4>{{user}}</h4>
+                <h4>rating: {{rating}}/4</h4>
+                <p>Comment: {{text}}</p>
             {{/each}}
-                <form class="bookComment">
-                   <select name="rating">
-                     <option value="1">1</option>
-                     <option value="2">2</option>
-                     <option value="3">3</option>
-                     <option value="4">4</option>
-                   </select>
-                   <input type="text" name="comment">
-               </form>        
-        </li>   
+
+            <form class="bookComment">
+                Rating:
+                <select name="rating">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+                <br/>
+                Comment:
+                <input type="text" name="comment">
+            </form>
+        </li>
+        <hr>
         {{/each}}
     </UL>
     {{#if isAdmin}}

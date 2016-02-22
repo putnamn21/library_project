@@ -1,7 +1,10 @@
 Meteor.subscribe('books');
+<<<<<<< HEAD
 //Meteor.subscribe('userData');
 
 var currentUID = Meteor.userId();
+=======
+>>>>>>> kevidently/master
 
 Template.bookList.helpers({
     books: function () {
@@ -10,10 +13,30 @@ Template.bookList.helpers({
     },
     isAdmin: function () {
         if (Meteor.user().username == "libadmin") {
+<<<<<<< HEAD
+=======
             return true;
         } else {
             return false;
         }
+    },
+    isSameUser: function () {
+        if (this.user == Meteor.user().username) {
+>>>>>>> kevidently/master
+            return true;
+        } else {
+            return false;
+        }
+    },
+    calcDateDue: function () {
+
+        
+//        var hour = date.getHours();
+//        var minute = date.getMinutes();
+//        var seconds = date.getSeconds();
+
+
+        
     }
 });
 
@@ -29,22 +52,29 @@ Template.bookList.events({
         Meteor.call('deleteBook', this._id)
     },
     "click .checkOut": function () {
+<<<<<<< HEAD
         Meteor.call('checkOut', this._id, currentUID);
+=======
+        Meteor.call('checkOut', this._id, Meteor.user().username, Date.now())
+>>>>>>> kevidently/master
     },
-    "submit .bookComment": function(event) {
-       event.preventDefault();
-       var text = event.target.comment.value;
-       var rating = event.target.rating.value;
-       var user = Meteor.user().username;
+    "click .checkIn": function () {
+        Meteor.call('checkIn', this._id, Meteor.user().username, Date.now())
+    },
+    "submit .bookComment": function (event) {
+        event.preventDefault();
+        var text = event.target.comment.value;
+        var rating = event.target.rating.value;
+        var user = Meteor.user().username;
 
-       var comment = {
-           text: text,
-           rating: rating,
-           user: user
-       };
+        var comment = {
+            text: text,
+            rating: rating,
+            user: user
+        };
 
-       Meteor.call('addComment', comment, this);
+        Meteor.call('addComment', comment, this);
 
-       event.target.comment.value = '';
-   }    
+        event.target.comment.value = '';
+    }
 });
