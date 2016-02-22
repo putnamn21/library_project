@@ -1,10 +1,10 @@
 Meteor.subscribe('books');
-<<<<<<< HEAD
+//<<<<<<< HEAD
 //Meteor.subscribe('userData');
 
 var currentUID = Meteor.userId();
-=======
->>>>>>> kevidently/master
+//=======
+//>>>>>>> kevidently/master
 
 Template.bookList.helpers({
     books: function () {
@@ -13,8 +13,8 @@ Template.bookList.helpers({
     },
     isAdmin: function () {
         if (Meteor.user().username == "libadmin") {
-<<<<<<< HEAD
-=======
+//<<<<<<< HEAD
+//=======
             return true;
         } else {
             return false;
@@ -22,7 +22,7 @@ Template.bookList.helpers({
     },
     isSameUser: function () {
         if (this.user == Meteor.user().username) {
->>>>>>> kevidently/master
+//>>>>>>> kevidently/master
             return true;
         } else {
             return false;
@@ -52,11 +52,11 @@ Template.bookList.events({
         Meteor.call('deleteBook', this._id)
     },
     "click .checkOut": function () {
-<<<<<<< HEAD
+// HEAD
         Meteor.call('checkOut', this._id, currentUID);
-=======
+//=======
         Meteor.call('checkOut', this._id, Meteor.user().username, Date.now())
->>>>>>> kevidently/master
+//>>>>>>> kevidently/master
     },
     "click .checkIn": function () {
         Meteor.call('checkIn', this._id, Meteor.user().username, Date.now())
@@ -76,5 +76,17 @@ Template.bookList.events({
         Meteor.call('addComment', comment, this);
 
         event.target.comment.value = '';
+    },
+    "submit .reservation": function (event){
+        event. preventDefault();
+        var reservationDate = event.target.date.value;
+        
+        var reservation = {
+            date: reservationDate,
+            user: Meteor.user().username,
+            }
+        Meteor.call('addReservation', reservation, this);
+        
+        event.target.date.value = '';
     }
 });

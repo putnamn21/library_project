@@ -22,7 +22,9 @@ Meteor.methods({
                 dateOut: timestamp,
                 tsDateDue: (timestamp + 1209600000),
 //                strDateDue: month + "/" + day + "/" + year
-                strDateDue: strDD
+                strDateDue: strDD,
+                reservationDate: '',
+                reservationUser: ''
             }
         });
         return bookID;
@@ -34,7 +36,8 @@ Meteor.methods({
             $set: {
                 bookOut: false,
                 user: null,
-                dateIn: timestamp
+                dateIn: timestamp,
+                reserved: false
             },
             $push: {
                 prevUsers: user
@@ -51,6 +54,18 @@ Meteor.methods({
                 }
             });
 
+        }
+    },
+    addReservation: function (reservation, book) {
+        if (Meteor.userId()) {
+           Books.update(book._id, {
+                $set: {
+                    reservationDate: reservation.date,
+                    reservationUser: reservation.user,
+                    reserved: true
+                }
+            }); 
+            
         }
     }
 });

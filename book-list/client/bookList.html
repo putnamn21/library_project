@@ -25,6 +25,19 @@
                 
             {{else}}
                 <button class="checkOut" type="button">Check Out</button>
+                <br/>
+                <hr/>
+                    {{#if reserved}}
+                     <p>Reserved by: {{reservationUser}}</p>
+                     <p>Until: {{reservationDate}}</p>
+                    {{else}}
+                        <label>Reserve</label>
+                        <form class="reservation">
+                            <input type="date" name="date">
+                            <button class="reserve" type="submit">Reserve Book</button>
+                        </form>
+                    {{/if}}
+                <hr/>
             {{/if}} 
             
             {{#each comments}}
