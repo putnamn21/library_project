@@ -23,10 +23,26 @@
                     <button class="checkIn" type="button">Check In</button>
                 {{/if}}
             {{else}}
+                <!-- maher changes -->
                 {{#if isMissing}}
                 {{else}}
                     <button class="checkOut" type="button">Check Out</button>
                 {{/if}}
+                <!-- end maher -->
+                
+                <!-- putnam changes  -->
+                {{#if reserved}}
+                    <p>Reserved by: {{reservationUser}} until: {{reservationDate}}</p>
+
+                {{else}}
+                    <label>Reserve</label>
+                    <form class="reservation">
+                        <input type="date" name="date">
+                        <button class="reserve" type="submit">Reserve Book</button>
+                    </form>
+                {{/if}}                
+                <!-- end putnam -->                
+                
             {{/if}}
             
             {{#each comments}}

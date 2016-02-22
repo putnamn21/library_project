@@ -48,7 +48,7 @@ Template.bookList.events({
     "click .reportFound": function () {
         Meteor.call('reportFound', this._id)
     },
-    //end maher's additions
+    //end maher
     "submit .bookComment": function (event) {
         event.preventDefault();
         var text = event.target.comment.value;
@@ -64,5 +64,19 @@ Template.bookList.events({
         Meteor.call('addComment', comment, this);
 
         event.target.comment.value = '';
+    },
+    // putnam changes
+    "submit .reservation": function (event) {
+        event.preventDefault();
+        var reservationDate = event.target.date.value;
+
+        var reservation = {
+            date: reservationDate,
+            user: Meteor.user().username,
+        }
+        Meteor.call('addReservation', reservation, this);
+
+        event.target.date.value = '';
     }
+    //end putnam
 });

@@ -23,7 +23,11 @@ Meteor.methods({
                 tsDateDue: (timestamp + 1209600000),
                 //                strDateDue: month + "/" + day + "/" + year
                 strDateDue: strDD,
-                isNotLost: true
+                isNotLost: true,
+                reservationDate: '',
+                reservationUser: '',
+                reserved: false
+                
             }
         });
         return bookID;
@@ -84,5 +88,18 @@ Meteor.methods({
             });
 
         }
+    },
+    // putnam changes
+    addReservation: function (reservation, book) {
+        if (Meteor.userId()) {
+            Books.update(book._id, {
+                $set: {
+                    reservationDate: reservation.date,
+                    reservationUser: reservation.user,
+                    reserved: true
+                }
+            }); 
+        }
     }
+    //end putnam
 });
