@@ -18,16 +18,6 @@ Template.bookList.helpers({
         } else {
             return false;
         }
-    },
-    calcDateDue: function () {
-
-        
-//        var hour = date.getHours();
-//        var minute = date.getMinutes();
-//        var seconds = date.getSeconds();
-
-
-        
     }
 });
 
@@ -48,6 +38,17 @@ Template.bookList.events({
     "click .checkIn": function () {
         Meteor.call('checkIn', this._id, Meteor.user().username, Date.now())
     },
+    //maher's additions
+    "click .reportLost": function () {
+        Meteor.call('reportLost', this._id, Meteor.user().username)
+    },
+    "click .reportMissing": function () {
+        Meteor.call('reportMissing', this._id)
+    },
+    "click .reportFound": function () {
+        Meteor.call('reportFound', this._id)
+    },
+    //end maher's additions
     "submit .bookComment": function (event) {
         event.preventDefault();
         var text = event.target.comment.value;

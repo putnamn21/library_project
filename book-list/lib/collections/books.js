@@ -11,8 +11,8 @@ Meteor.methods({
     },
     checkOut: function (bookData, user, timestamp) {
         var date = new Date(timestamp + 1209600000);
-        var strDD = date.toLocaleDateString(); 
-        
+        var strDD = date.toLocaleDateString();
+
         var bookID = Books.update({
             _id: bookData
         }, {
@@ -21,8 +21,9 @@ Meteor.methods({
                 user: user,
                 dateOut: timestamp,
                 tsDateDue: (timestamp + 1209600000),
-//                strDateDue: month + "/" + day + "/" + year
-                strDateDue: strDD
+                //                strDateDue: month + "/" + day + "/" + year
+                strDateDue: strDD,
+                isNotLost: true
             }
         });
         return bookID;
@@ -34,10 +35,41 @@ Meteor.methods({
             $set: {
                 bookOut: false,
                 user: null,
-                dateIn: timestamp
+                dateIn: timestamp,
+                isNotLost: true
             },
             $push: {
                 prevUsers: user
+            }
+        });
+        return bookID;
+    },
+    reportLost: function (bookData, user) {
+        var bookID = Books.update({
+            _id: bookData
+        }, {
+            $set: {
+                isNotLost: false
+            }
+        });
+        return bookID;
+    },
+    reportMissing: function (bookData) {
+        var bookID = Books.update({
+            _id: bookData
+        }, {
+            $set: {
+                isMissing: true
+            }
+        });
+        return bookID;
+    },
+    reportFound: function (bookData) {
+        var bookID = Books.update({
+            _id: bookData
+        }, {
+            $set: {
+                isMissing: false
             }
         });
         return bookID;

@@ -3,3 +3,7 @@
 hr {
     margin: 10px 0;
 }
+
+.warn {
+    color: red;
+}

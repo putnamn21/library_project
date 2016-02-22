@@ -20,18 +20,29 @@
                 <span>Due: {{strDateDue}}</span>
                 <br/>
                 {{#if isSameUser}}
-                <button class="checkIn" type="button">Check In</button>
+                    <button class="checkIn" type="button">Check In</button>
                 {{/if}}
-                
             {{else}}
-                <button class="checkOut" type="button">Check Out</button>
-            {{/if}} 
+                {{#if isMissing}}
+                {{else}}
+                    <button class="checkOut" type="button">Check Out</button>
+                {{/if}}
+            {{/if}}
             
             {{#each comments}}
                 <h4>{{user}}</h4>
                 <h4>rating: {{rating}}/4</h4>
                 <p>Comment: {{text}}</p>
             {{/each}}
+            
+            {{#if isNotLost}}
+            {{else}}
+                <h3 class="warn">Book has been reported as lost by user "{{user}}"</h3>
+            {{/if}}
+            
+            {{#if isMissing}}
+                <h3 class="warn">An administrator has marked this book as missing.</h3>
+            {{/if}}
 
             <form class="bookComment">
                 Rating:
@@ -45,6 +56,19 @@
                 Comment:
                 <input type="text" name="comment">
             </form>
+            {{#if isNotLost}}
+                {{#if isSameUser}}
+                    <button class="reportLost" type="button">I've Lost The Book</button>
+                {{/if}}
+            {{/if}}
+            
+            {{#if isAdmin}}
+                {{#if isMissing}}
+                    <button class="reportFound" type="button">Unmark This Book As Missing</button>
+                {{else}}
+                    <button class="reportMissing" type="button">Mark This Book As Missing</button>
+                {{/if}}
+            {{/if}}
         </li>
         <hr>
         {{/each}}
