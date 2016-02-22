@@ -1,5 +1,5 @@
 Meteor.subscribe('books');
-Meteor.subscribe('userData');
+//Meteor.subscribe('userData');
 
 var currentUID = Meteor.userId();
 
@@ -9,7 +9,7 @@ Template.bookList.helpers({
         //    return Session.get('books');
     },
     isAdmin: function () {
-        if (currentUID == "qQxgj2mm3t4nhb4wH") {
+        if (Meteor.user().username == "libadmin") {
             return true;
         } else {
             return false;
@@ -29,7 +29,7 @@ Template.bookList.events({
         Meteor.call('deleteBook', this._id)
     },
     "click .checkOut": function () {
-        Meteor.call('checkOut', this._id, currentUID)
+        Meteor.call('checkOut', this._id, currentUID);
     },
     "submit .bookComment": function(event) {
        event.preventDefault();
