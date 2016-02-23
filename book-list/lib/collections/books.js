@@ -2,6 +2,7 @@ Books = new Meteor.Collection("books");
 
 Meteor.methods({
     addBook: function (bookData) {
+        console.log(bookData);
         var bookID = Books.insert(bookData);
         return bookID;
     },
@@ -21,13 +22,11 @@ Meteor.methods({
                 user: user,
                 dateOut: timestamp,
                 tsDateDue: (timestamp + 1209600000),
-                //                strDateDue: month + "/" + day + "/" + year
                 strDateDue: strDD,
                 isNotLost: true,
                 reservationDate: '',
                 reservationUser: '',
                 reserved: false
-                
             }
         });
         return bookID;
@@ -98,8 +97,34 @@ Meteor.methods({
                     reservationUser: reservation.user,
                     reserved: true
                 }
-            }); 
+            });
         }
-    }
+    },
     //end putnam
+
+    //beginning v add search function
+    bookSearch: function (searchCrit, searchInput) {
+        var tempObject = [];
+        var allBooks = Books.find().fetch();
+        var some = new RegExp(searchInput, 'i');
+        if (searchCrit == 'author') {
+            for (var j = 0; j < allBooks.length; j++) {
+                var temp = allBooks[j].author;
+                if (some.test(temp) == true) {
+                    tempObject.push(allBooks[j]);
+                }
+            }
+        }
+
+        if (searchCrit == 'title') {
+            for (var j = 0; j < allBooks.length; j++) {
+                temp = allBooks[j].title;
+                if (some.test(temp) == true) {
+                    tempObject.push(allBooks[j]);
+                }
+            }
+        }
+        return tempObject;
+    },
+    //end v add search function
 });

@@ -1,8 +1,14 @@
 <head>
-    <title>book-list</title>
+    <title>CodeCraft Library</title>
 </head>
 
 <body>
-    {{> loginButtons}}
-    {{> bookList}}
+    <div id="content">
+        <img src="http://www.codecraftschool.com/wp-content/uploads/2015/09/CodeCraftSchoolWideSm.png">
+        <h3>Please sign in to see our books</h3>
+        <h4> {{> loginButtons}}</h4>
+    </div>
+    <div id="list">
+        {{> bookList}}
+    </div>
 </body>

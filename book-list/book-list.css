@@ -1,9 +1,32 @@
-/* CSS declarations go here */
-
 hr {
     margin: 10px 0;
 }
 
 .warn {
     color: red;
+}
+
+li {
+    list-style-type: none;
+}
+
+body {
+    background: url(http://hominic.com/wp-content/uploads/2015/03/Comfortable-Home-Library-Design.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#content {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    color: #555555;
+    margin: 25px auto;
+    background-color: rgba(221, 228, 236, 0.91);
+    width: 100%;
+    max-width: 400px;
+    border-radius: 5px;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
