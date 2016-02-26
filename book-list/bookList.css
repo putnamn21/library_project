@@ -1,0 +1,16 @@
+h3 {
+    margin-left: 15px;
+}
+
+#list {
+    text-align: left;
+    font-family: 'Open Sans', sans-serif;
+    color: #555555;
+    margin: 25px auto;
+    background-color: rgba(221, 228, 236, 0.92);
+    width: 100%;
+    max-width: 600px;
+    border-radius: 5px;
+    padding-bottom: 10px;
+    padding-top: 0px;
+} 

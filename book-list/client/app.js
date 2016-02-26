@@ -28,16 +28,12 @@ Template.bookList.helpers({
             return false;
         }
     },
-    calcDateDue: function () {
 
-        
-//        var hour = date.getHours();
-//        var minute = date.getMinutes();
-//        var seconds = date.getSeconds();
-
-
-        
-    }
+    //beginning v--add book search results helper
+    searchresults: function () {
+            return Session.get('searchresult');
+        }
+        //end v--add book search result helper
 });
 
 Template.bookList.events({
@@ -46,6 +42,16 @@ Template.bookList.events({
         Meteor.call('addBook', {
             title: event.target.title.value,
             author: event.target.author.value,
+            isMissing: false,
+            isNotLost: true,
+
+            //becconk changes
+            copyright: event.target.copyright.value,
+            publisher: event.target.publisher.value,
+            bookOwner: event.target.bookOwner.value,
+            bookCategory: event.target.bookCategory.value,
+            //end becconk
+            imgPath: '/book-covers/'+event.target.bookImageFile.value
         })
     },
     "click .deleteBook": function () {
@@ -61,6 +67,17 @@ Template.bookList.events({
     "click .checkIn": function () {
         Meteor.call('checkIn', this._id, Meteor.user().username, Date.now())
     },
+    //maher's additions
+    "click .reportLost": function () {
+        Meteor.call('reportLost', this._id, Meteor.user().username)
+    },
+    "click .reportMissing": function () {
+        Meteor.call('reportMissing', this._id)
+    },
+    "click .reportFound": function () {
+        Meteor.call('reportFound', this._id)
+    },
+    //end maher
     "submit .bookComment": function (event) {
         event.preventDefault();
         var text = event.target.comment.value;
@@ -77,6 +94,7 @@ Template.bookList.events({
 
         event.target.comment.value = '';
     },
+<<<<<<< HEAD
     "submit .reservation": function (event){
         event. preventDefault();
         var reservationDate = event.target.date.value;
@@ -89,4 +107,39 @@ Template.bookList.events({
         
         event.target.date.value = '';
     }
+=======
+
+    // putnam changes 02222016
+    "submit .reservation": function (event) {
+        event.preventDefault();
+        var reservationDate = event.target.date.value;
+
+        var reservation = {
+            date: reservationDate,
+            user: Meteor.user().username,
+        }
+        Meteor.call('addReservation', reservation, this);
+
+        event.target.date.value = '';
+    },
+    //end putnam
+
+    //begin v--add book search
+    "submit .bookSearch": function (event) {
+        // Prevent default browser form submit
+        event.preventDefault();
+
+        // Get value from form element
+        var searchInput = event.target.bookSearchInput.value;
+        var searchCrit = event.target.searchCrit.value;
+
+        // Clear form
+        event.target.bookSearchInput.value = '';
+
+        Meteor.call('bookSearch', searchCrit, searchInput, function (err, result) {
+            Session.set('searchresult', result);
+        });
+    },
+    //end v--add book search
+>>>>>>> kevidently/master
 });

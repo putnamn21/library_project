@@ -1,27 +1,53 @@
 <template name="bookList">
     {{#if currentUser}}
-    <h3>Here are the library books:</h3>
-    <UL>
-        {{#each books}}
-        <li>
-            <i>{{title}}</i> by {{author}}
-            <br/>
-            
-            <!--check if admin-->
-            {{#if isAdmin}}
-                <button class="deleteBook" type="button">Delete</button>
-                <br/>
-            {{/if}}
+       
+        <!--beginning v add search results-->
+        <h3>Please select search criterion and enter search term</h3>
 
-            <!--render checkout & checkin buttons-->
-            {{#if bookOut}}
-                <span>Checked Out by {{user}}</span>
+        <form class="bookSearch">
+                Search Criterion:
+                <select name="searchCrit">
+                    <option value='author'>Author</option>
+                    <option value='title'>Title</option>
+                </select>
                 <br/>
-                <span>Due: {{strDateDue}}</span>
+                Search:
+                <input type="text" name='bookSearchInput'>
+                <input type="submit" value="search">
+        </form>
+
+        {{#if searchresults}}
+            {{#each searchresults}}
+                <h3>Search Results</h3>       
+                <p>
+                    <i>{{title}}</i> by {{author}}
+                </p>
+           {{/each}}
+       {{/if}}
+        <!--end v add search results-->
+       
+  
+       
+        <h3>Here are our library books:</h3>
+        <ul>
+            {{#each books}}
+            <img src={{imgPath}}>
+            <li>
+                <i>{{title}}</i> by {{author}}
                 <br/>
-                {{#if isSameUser}}
-                <button class="checkIn" type="button">Check In</button>
+                    Publisher: {{publisher}} &copy; {{copyright}}
+                <br/>
+                    Book Owner: {{bookOwner}}
+                <br/>
+                    Book Category: {{bookCategory}}
+                <br/>
+
+                <!--check if admin-->
+                {{#if isAdmin}}
+                    <button class="deleteBook" type="button">Delete Book</button>
+                    <br/>
                 {{/if}}
+<<<<<<< HEAD
                 
             {{else}}
                 <button class="checkOut" type="button">Check Out</button>
@@ -32,10 +58,37 @@
                      <p>Until: {{reservationDate}}</p>
                     {{else}}
                         <label>Reserve</label>
+=======
+
+                <!--render checkout & checkin buttons-->
+                {{#if bookOut}}
+                    <span>Checked Out by {{user}}</span>
+                    <br/>
+                    <span>Due: {{strDateDue}}</span>
+                    <br/>
+                    {{#if isSameUser}}
+                        <button class="checkIn" type="button">Check In Book</button>
+                    {{/if}}
+                {{else}}
+                    <!-- maher changes -->
+                    {{#if isMissing}}
+                    {{else}}
+                        <button class="checkOut" type="button">Check Out Book</button>
+                    {{/if}}
+                    <!-- end maher -->
+
+                    <!-- putnam changes  -->
+                    {{#if reserved}}
+                        <p>Reserved by: {{reservationUser}} until: {{reservationDate}}</p>
+
+                    {{else}}
+                        <br/>
+>>>>>>> kevidently/master
                         <form class="reservation">
                             <input type="date" name="date">
                             <button class="reserve" type="submit">Reserve Book</button>
                         </form>
+<<<<<<< HEAD
                     {{/if}}
                 <hr/>
             {{/if}} 
@@ -44,34 +97,100 @@
                 <h4>{{user}}</h4>
                 <h4>rating: {{rating}}/4</h4>
                 <p>Comment: {{text}}</p>
-            {{/each}}
+=======
+                    {{/if}}                
+                    <!-- end putnam -->                
 
-            <form class="bookComment">
-                Rating:
-                <select name="rating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                </select>
-                <br/>
-                Comment:
-                <input type="text" name="comment">
-            </form>
-        </li>
-        <hr>
-        {{/each}}
-    </UL>
-    {{#if isAdmin}}
-    <form class="add-book">
-        Title:
-        <br>
-        <input type="text" name="title">
-        <br> Author:
-        <br>
-        <input type="text" name="author">
-        <input type="submit" value="Add Book">
-    </form>
-    {{/if}} {{else}}
-    <h3>Please log in to see books</h3> {{/if}}
+                {{/if}}
+
+                {{#each comments}}
+                    <h4>{{user}}</h4>
+                    <h4>rating: {{rating}}/4</h4>
+                    <p>Comment: {{text}}</p>
+                {{/each}}
+
+                {{#if isNotLost}}
+                {{else}}
+                    <h3 class="warn">Book has been reported as lost by user "{{user}}"</h3>
+                {{/if}}
+
+                {{#if isMissing}}
+                    <h3 class="warn">An administrator has marked this book as missing.</h3>
+                {{/if}}
+
+                <form class="bookComment">
+                    Rating:
+                    <select name="rating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                    <br/>
+                    Comment:
+                    <input type="text" name="comment">
+                </form>
+                {{#if isNotLost}}
+                    {{#if isSameUser}}
+                        <button class="reportLost" type="button">I've Lost The Book</button>
+                    {{/if}}
+                {{/if}}
+
+                {{#if isAdmin}}
+                    {{#if isMissing}}
+                        <button class="reportFound" type="button">Unmark This Book As Missing</button>
+                    {{else}}
+                        <button class="reportMissing" type="button">Mark This Book As Missing</button>
+                    {{/if}}
+                {{/if}}
+            </li>
+            <hr>
+>>>>>>> kevidently/master
+            {{/each}}
+        </ul>
+        
+        {{#if isAdmin}}
+        <form class="add-book">
+            Title:
+            <input type="text" name="title">        
+            <br/>
+
+            Author:
+            <input type="text" name="author">
+            <br/>
+
+            Copyright:
+            <input type="text" name="copyright">
+            <br/>
+
+            Publisher:
+            <input type="text" name="publisher">
+            <br/>
+
+            Book Owner:
+            <input type="text" name="bookOwner">
+            <br/> 
+            
+            Book Image File Name:
+            <input type="text" name="bookImageFile">
+            <br/> 
+
+            Category:
+            <select name="bookCategory">
+                <option value="Select Book Category">Select Book Category</option>
+                <option value="Programming Languages">Programming Languages</option>
+                <option value="Game Programming">Game Programming</option>
+                <option value="Mobile App Development">Mobile App Development</option>
+                <option value="Object Oriented Programming">Object Oriented Programming</option>
+                <option value="Software Engineering">Software Engineering</option>
+                <option value="User Interfaces">User Interfaces</option>
+            </select>
+            <br/>
+            <br/>               
+
+
+            <input type="submit" value="Add Book">
+        </form>
+        {{/if}}
+    {{/if}}
 </template>
